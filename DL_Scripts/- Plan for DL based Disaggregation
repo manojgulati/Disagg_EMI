@@ -1,0 +1,88 @@
+Plan for DL based Disaggregation
+
+
+-- Raw TD data: 16384x100 CM EMI
+-- Input data size :  1024x1600 CM EMI
+
+
+First trial run for DL
+- Number of appliances: 7
+-- BGN, CFL, CPU, LC, LCD, Projector, Power Supply
+- Number of appliances in test case:4
+-- BGN, BGN, CPU, CFL
+
+Second trial run for DL
+- Number of appliances: 4
+-- BGN, CFL, CPU, LC
+- Number of appliances in test case:4
+-- BGN, BGN, CPU, CFL
+
+
+X = DxZ
+
+1024x800 -> D1 = [1024x1000]
+
+
+D = [D1 D2 D3 .. D7]
+
+D = [1024x7000]
+
+Xtest = [1024x800]
+
+Xtest =  D1xZ1 = BGN = D1
+
+Z = [7000x800]
+
+Z1 = [1000x800]
+Z2 = [1000x800]
+Z3 = [1000x800]
+Z4 = [1000x800]
+Z5 = [1000x800]
+Z6 = [1000x800]
+Z7 = [1000x800]
+
+
+List of EMI measurements for appliance combination
+- CPU + LCD
+- CPU + CFL
+- LC + CFL
+- PRJ + CFL
+
+File_Names = {'BGN1','CFL1','CPU1','LC1','LCD1','PRJ1','PS1'};
+
+
+Individual appliances
+- CFL #
+- CPU + LCD #
+- PRJ #
+- LC #
+
+Combination of two appliances
+- CFL + CPU + LCD #
+- PRJ + CFL #
+- LC+CFL #
+- LC+PRJ # 
+- LC+CPU+LCD #
+- PRJ+CPU+LCD #
+
+
+Z_Testing - Using parameter tuning
+
+Initial value of Lamda = 0.001, Lamda1 = 0.001
+
+Trial1:
+Lamda = 0.1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
