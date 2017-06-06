@@ -9,7 +9,7 @@ clear all;
 close all;
 clc;
 
-Path2 = 'CMM1_';
+Path2 = 'CFL_Test_';
 File_Path = strcat(Path2);
 
 No_of_traces = 100;
