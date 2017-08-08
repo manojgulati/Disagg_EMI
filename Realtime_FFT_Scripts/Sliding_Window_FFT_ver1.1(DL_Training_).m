@@ -9,13 +9,15 @@ clc;
 clear all;
 close all;
 
-Path1 = './PRT_PRT_MFD/';
+Path1 = './PRT_PRT_PRJ/';
 Path2 = 'Plots/';
 Path3 = 'Data/';
+Path4 = 'FFT_Dump/';
 
 loadContent=dir(strcat(Path1,'*.csv'));
-No_of_files = size(loadContent,1);
-No_of_traces = 10;
+No_of_files_actual = size(loadContent,1);
+No_of_files = 3010;
+No_of_traces = 1;
 %%
 offset = 0;
 while(offset<=No_of_files)
@@ -114,19 +116,20 @@ display(i-No_of_traces+offset+1);
 % ConvertPlot4Publication(strcat(Path1,Path2,'FFT_X5_',loadContent(i-No_of_traces+offset+1,1).name),'height',4, 'width',6,'fontsize', 10, 'fontname', 'Times New Roman', 'samexaxes', 'on','linewidth',0.5,'pdf','off','eps','off','psfrag','off','fig','off');
 % close all;
 
-CM_Data = 10*log10(1000*((AmpY_1.^2)/10^6));
+% CM_Data = 10*log10(1000*((AmpY_1.^2)/10^6));
+CM_Data = AmpY_1;
 % DM_Data = 10*log10(1000*((AmpY_2.^2)/10^6));
 
 % Write timestamp with all averaged FFT traces to get index of missing values
 Timestamp = round(str2num(loadContent(i-No_of_traces+offset+1,1).name(1:end-4)));
 
 % Store averaged FFT data as mat files
-save(strcat(Path1,Path3,loadContent(i-No_of_traces+offset+1,1).name,'.mat'),'CM_Data','Timestamp');  % function form
+save(strcat(Path1,Path4,loadContent(i-No_of_traces+offset+1,1).name,'.mat'),'CM_Data','Timestamp');  % function form
 % clear variables
 clear CM_Data;
 clear DM_Data;
 clear AmpY_1;
 clear AmpY_2;
 
-offset = offset+10;
+offset = offset+1;
 end

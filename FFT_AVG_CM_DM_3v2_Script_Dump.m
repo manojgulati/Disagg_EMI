@@ -9,7 +9,7 @@ clear all;
 close all;
 clc;
 
-Path2 = 'LC_CPU_LCD1_';
+Path2 = 'LC1_';
 File_Path = strcat(Path2);
 
 No_of_traces = 100;

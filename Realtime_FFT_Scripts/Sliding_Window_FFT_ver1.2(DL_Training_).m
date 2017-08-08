@@ -9,19 +9,28 @@ clc;
 clear all;
 close all;
 
-Path1 = './PRT_PRT_MFD/';
+File_Names = {'CFL','CPU','LC','PRJ','PRT','MFD','BGN','CFL_CPU','CFL_LC','CFL_PRJ','CFL_PRT','CFL_MFD','CPU_LC','CPU_PRJ','CPU_PRT','CPU_MFD','LC_PRJ','LC_PRT','LC_MFD','PRJ_PRT','PRJ_MFD','PRT_MFD'};
+
+file_ind = 7;
+
+while(file_ind<=7)
+
+% Path1 = './CFL-BGN/';
 Path2 = 'Plots/';
 Path3 = 'Data/';
+Path4 = 'FFT_Dump/';
 
-loadContent=dir(strcat(Path1,'*.csv'));
-No_of_files = size(loadContent,1);
-No_of_traces = 10;
-%%
+loadContent=dir(strcat('./',char(File_Names(file_ind)),'_Study_Continuous_[Monday]/','*.csv'));
+No_of_files_actual = size(loadContent,1);
+No_of_files = 3010;
+No_of_traces = 1;
+% %
+
 offset = 0;
 while(offset<=No_of_files)
 
 for i=1:No_of_traces
-    M1(:,:,i) = dlmread(strcat(Path1,loadContent(i+offset,1).name),'');
+    M1(:,:,i) = dlmread(strcat('./',char(File_Names(file_ind)),'_Study_Continuous_[Monday]/',loadContent(i+offset,1).name),'');
 end
 
 for i=1:No_of_traces
@@ -62,16 +71,16 @@ for i = 1:No_of_traces
     % Computing spectrum for Common Mode EMI 
     Y2(:,i)  = fft(y2(:,i))/L;
     % Computing magnitude of Vdm and Vcm for length L/2
-    ampY_1(:,i) = abs(Y1(1:L/2,i));
-    ampY_2(:,i) = abs(Y2(1:L/2,i));
+    ampY_1(:,i) = (Y1(1:L/2,i));
+    ampY_2(:,i) = (Y2(1:L/2,i));
 end
 
-% Integrating the amplitude over 10 traces for averaging
-AmpY_1 = sum(ampY_1,2);
-AmpY_2 = sum(ampY_2,2);
-% Averaging over 10 traces
-AmpY_1 = AmpY_1/No_of_traces;
-AmpY_2 = AmpY_2/No_of_traces;
+% % Integrating the amplitude over 10 traces for averaging
+% AmpY_1 = sum(ampY_1,2);
+% AmpY_2 = sum(ampY_2,2);
+% % Averaging over 10 traces
+% AmpY_1 = AmpY_1/No_of_traces;
+% AmpY_2 = AmpY_2/No_of_traces;
 
 % Computing f vector for length fs/2
 f = (fs/2-1/T)*linspace(0,1,L/2);
@@ -114,19 +123,25 @@ display(i-No_of_traces+offset+1);
 % ConvertPlot4Publication(strcat(Path1,Path2,'FFT_X5_',loadContent(i-No_of_traces+offset+1,1).name),'height',4, 'width',6,'fontsize', 10, 'fontname', 'Times New Roman', 'samexaxes', 'on','linewidth',0.5,'pdf','off','eps','off','psfrag','off','fig','off');
 % close all;
 
-CM_Data = 10*log10(1000*((AmpY_1.^2)/10^6));
+% CM_Data = 10*log10(1000*((AmpY_1.^2)/10^6));
+CM_Data = ampY_1;
 % DM_Data = 10*log10(1000*((AmpY_2.^2)/10^6));
 
 % Write timestamp with all averaged FFT traces to get index of missing values
 Timestamp = round(str2num(loadContent(i-No_of_traces+offset+1,1).name(1:end-4)));
 
 % Store averaged FFT data as mat files
-save(strcat(Path1,Path3,loadContent(i-No_of_traces+offset+1,1).name,'.mat'),'CM_Data','Timestamp');  % function form
+save(strcat('./',char(File_Names(file_ind)),'_Study_Continuous_[Monday]/',Path4,loadContent(i-No_of_traces+offset+1,1).name,'.mat'),'CM_Data','Timestamp');  % function form
 % clear variables
 clear CM_Data;
 clear DM_Data;
 clear AmpY_1;
 clear AmpY_2;
 
-offset = offset+10;
+offset = offset+1;
+end
+
+
+file_ind = file_ind+1;
+
 end

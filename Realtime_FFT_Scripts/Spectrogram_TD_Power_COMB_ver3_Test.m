@@ -11,7 +11,7 @@ close all;
 format long g;
 
 % Path for Averaged FFT data 
-Path1 = './PRT-BGN/';
+Path1 = './PRT_PRT_MFD/';
 Path4 = '';
 Path2 = 'Data/';
 Path3 = 'Processed_EMI/';
@@ -38,14 +38,14 @@ del_f = 1/T; % Min. Freq. resolution (in Hz)
 f = (fs/2-1/T)*linspace(0,1,L/2);
 f1 = f/1000000;
 
-%% Print start and end timestamp of FFT data
+% % Print start and end timestamp of FFT data
 clc;
 display('Start TS:');
 display(TS_Vector_Required(1));
 display('End TS:');
 display(TS_Vector_Required(end));
 
-%%
+% %
 % Timestamp for time domain and frequency domain plot
 start_time = TS_Vector_Required(1);
 end_time = TS_Vector_Required(end);
@@ -58,7 +58,7 @@ time_slot = end_time - start_time+1;
 
 EMI_duration = size(M1_Updated,2);
 
-%% Plot spectrogram using stacked FFT data retrived from averaged FFT frames
+% % Plot spectrogram using stacked FFT data retrived from averaged FFT frames
 % figure;
 % figure('units','normalized','outerposition',[0 0 1 1]);
 t_axis = [1:EMI_duration];
@@ -91,7 +91,7 @@ xlabel('Time (in seconds)','FontSize',18);
 ylabel('Frequency (in MHz)','FontSize',18);
 h = colorbar;
 ylabel(h, 'Amplitude (dBm)','FontSize',18);
-% caxis([-150 -90])
+% caxis([-155 -80])
 % 
 % grid on;
 

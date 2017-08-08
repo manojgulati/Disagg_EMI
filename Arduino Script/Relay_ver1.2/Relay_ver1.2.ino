@@ -1,11 +1,11 @@
 /*
-Script to perform automated appliance switching using relay controlled extension cord. 
-Author: Manoj Gulati
-PhD (IIIT-Delhi)
--- Sequential control: One appliance at a time
--- Total appliances: 8
--- ON Duration: 2min
--- OFF Duration: 2min
+  Script to perform automated appliance switching using relay controlled extension cord.
+  Author: Manoj Gulati
+  PhD (IIIT-Delhi)
+  -- Sequential control: One appliance at a time
+  -- Total appliances: 8
+  -- ON Duration: 2min
+  -- OFF Duration: 2min
 */
 
 int i;
@@ -41,6 +41,16 @@ void Turn_ON()
 void loop()
 {
   //  Execution set of automated switching circuit
-  
-    Turn_ON();
+
+//  Turn_ON();
+    digitalWrite(1, LOW);
+    digitalWrite(2, LOW);
+    digitalWrite(3, LOW);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW);
+    digitalWrite(7, LOW);
+    digitalWrite(8, LOW);
+
+
 }

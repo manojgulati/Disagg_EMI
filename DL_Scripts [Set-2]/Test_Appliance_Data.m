@@ -2,37 +2,42 @@ clc;
 clear all;
 close all;
 
-Path1 = 'CFL1_';
+File_Names = {'CFL','CPU','LC','PRJ','PRT','MFD','BGN','CFL_CPU','CFL_LC','CFL_PRJ','CFL_PRT','CFL_MFD','CPU_LC','CPU_PRJ','CPU_PRT','CPU_MFD','LC_PRJ','LC_PRT','LC_MFD','PRJ_PRT','PRJ_MFD','PRT_MFD'};
+
+for i = 1:7
+   
+display(i);
 
 %load data samples 
-load (strcat(Path1,'FFT_Dump.mat'));
+load(strcat(char(File_Names(i)),'_FFT_Dump.mat'));
 
 % % Convert Data in to dB scale
 % ampY_dB = 10*log10(1000*((ampY_1.^2)/10^6));
 
 % PRSG Code
-range = 3000;
+range = 10000;
 
-X =  randi([1 100],1,range);
-
+X =  randi([1 3000],1,range);
+ 
 % % Data matrix
 for index=1:range
-    Signal_data(:,index)=ampY_1(1:525,X(index));
+    Signal_data(:,index)=M1(1:525,X(index));
 end
 
-% Signal_data=ampY_1(1:525,:);
+% Signal_data=M1(1:525,:);
 
 % Signal_data_norm = (Signal_data - min(min(Signal_data)))/(max(max(Signal_data)) - min(min(Signal_data)));
 
 % % dictionary learning
-[Dict,Z,J]=myDL_rand_init(Signal_data,50);
+[Dict,Z,J]=myDL_rand_init(Signal_data,1000);
 
 % %
 
-save(strcat(Path1,'DL_Data_T15.mat'),'Dict','J','Z');
+save(strcat(char(File_Names(i)),'_DL_Data_T2.mat'),'Dict','J','Z');
 
 Z_norm = norm(Z)
 
+end
 %%
 plot(J);
 xlabel('Time(sec)','FontSize', 12)

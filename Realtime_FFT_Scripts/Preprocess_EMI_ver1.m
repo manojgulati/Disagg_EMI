@@ -12,7 +12,7 @@ close all;
 format long g;
 
 % Path for Averaged FFT data 
-Path1 = './PRT-BGN/';
+Path1 = './PRT_PRT_MFD/';
 Path4 = '';
 Path2 = 'Data/';
 Path3 = 'Processed_EMI/';
@@ -22,7 +22,7 @@ Path3 = 'Processed_EMI/';
 loadContent=dir(strcat(Path1,Path4,Path2,'*.mat'));
 No_of_files = size(loadContent,1);
 TS_Vector = [];
-%%
+% %
 
 for i=1:No_of_files
     load(strcat(Path1,Path4,Path2,loadContent(i,1).name));
@@ -32,13 +32,13 @@ for i=1:No_of_files
     clear Timestamp;
 end
 
-%
+
 % Store start and end time of EMI data
 Start_time = TS_Vector(1);
 End_time = TS_Vector(end);
 % Store original Timestamp vector in a secondary variable
 TS_Vector_Original = TS_Vector;
-%
+
 
 % indices to unique values in column 3
 [~, ind] = unique(TS_Vector);
@@ -58,7 +58,7 @@ TS_Vector_Required = [Start_time:1:End_time]';
 % Find indices where data is missing
 missing_values = setdiff(TS_Vector_Required,TS_Vector);
 
-%%
+% %
 
 M1_Updated = M1_Unique;
 
@@ -70,7 +70,8 @@ for value = 1:size(missing_values,1)
     M1_Updated = [M1_Updated(:,1:target-1) M1_Updated(:,source) M1_Updated(:,target:end)];   
 end
 
-%% Store processed EMI FFT data as mat file
+
+% % Store processed EMI FFT data as mat file
 save(strcat(Path1,Path4,Path3,'Processed_EMI','.mat'),'M1_Updated','TS_Vector_Required');
 
 

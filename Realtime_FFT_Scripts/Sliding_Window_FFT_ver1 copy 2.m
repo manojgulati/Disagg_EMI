@@ -9,7 +9,7 @@ clc;
 clear all;
 close all;
 
-Path1 = './PRT_PRT_MFD/';
+Path1 = './LC_LC_PRT/';
 Path2 = 'Plots/';
 Path3 = 'Data/';
 

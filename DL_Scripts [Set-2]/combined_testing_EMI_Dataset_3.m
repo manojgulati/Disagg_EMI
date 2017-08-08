@@ -77,22 +77,22 @@ Dictionary=[D_CFL D_LCD_CPU D_LC D_PRJ D_PRT D_MFD D_BGN];
 %% %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                            sparse coding based disaggregation                 %
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 
-% for i=1:22
-%     disp(i);
-%     load(strcat(char(File_Names(i)),'_FFT_Dump'));
-%     % % Convert Data in to dB scale
-% %     ampY_dB = 10*log10(1000*((ampY_1.^2)/10^6));
-%     TEST = M1(1:525,:); 
-% %     clear ampY_dB; 
-%     clear M1;
-% %     TEST_Norm = (TEST - min(min(TEST)))/(max(max(TEST)) - min(min(TEST)));
-%     Z=myIST(Dictionary,TEST,1000,0.001);
-%     save(strcat('Z_',char(File_Names(i)),'_Selftest_T3.mat'),'Z');
-%     clear TEST; clear Z; %clear TEST_Norm;
-% end
-% disp('Self Test Done');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+for i=1:22
+    disp(i);
+    load(strcat(char(File_Names(i)),'_FFT_Dump'));
+    % % Convert Data in to dB scale
+%     ampY_dB = 10*log10(1000*((ampY_1.^2)/10^6));
+    TEST = M1(1:525,:); 
+%     clear ampY_dB; 
+    clear M1;
+%     TEST_Norm = (TEST - min(min(TEST)))/(max(max(TEST)) - min(min(TEST)));
+    Z=myIST(Dictionary,TEST,1000,0.001);
+    save(strcat('Z_',char(File_Names(i)),'_Selftest_T5.mat'),'Z');
+    clear TEST; clear Z; %clear TEST_Norm;
+end
+disp('Self Test Done');
 
 % %% 
 % for i=1:4

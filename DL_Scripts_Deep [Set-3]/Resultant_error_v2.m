@@ -4,20 +4,21 @@ close all;
 
 combined_testing_EMI_Dataset_2();
 
-Num_classes = 7;
+Num_classes = 6;
 Num_test_samples = 3000;
-Dict_atoms = 50;
+Dict_atoms = 100;
 
-File_Names = {'CFL','CPU','LC','PRJ','PRT','MFD','BGN','CFL_CPU','CFL_LC','CFL_PRJ','CFL_PRT','CFL_MFD','CPU_LC','CPU_PRJ','CPU_PRT','CPU_MFD','LC_PRJ','LC_PRT','LC_MFD','PRJ_PRT','PRJ_MFD','PRT_MFD'};
+% File_Names = {'CFL','CPU','LC','PRJ','PRT','MFD','BGN','CFL_CPU','CFL_LC','CFL_PRJ','CFL_PRT','CFL_MFD','CPU_LC','CPU_PRJ','CPU_PRT','CPU_MFD','LC_PRJ','LC_PRT','LC_MFD','PRJ_PRT','PRJ_MFD','PRT_MFD'};
+File_Names = {'CFL','CPU','LC','PRJ','PRT','MFD','BGN','CFL_CPU','CFL_LC','CFL_PRJ','CFL_PRT','CFL_MFD','CPU_LC','CPU_PRJ','CPU_PRT','CPU_MFD','LC_PRJ','LC_PRT','LC_MFD','PRJ_PRT','PRJ_MFD','PRT_MFD','CFL_CPU_LC','CFL_CPU_PRJ','CFL_CPU_PRT','CFL_CPU_MFD','CFL_LC_PRJ','CFL_LC_PRT','CFL_LC_MFD','CFL_PRJ_PRT','CPU_LC_PRJ','CPU_LC_PRT','CPU_LC_MFD','CPU_PRJ_PRT','LC_PRJ_PRT','PRJ_PRT_MFD','CFL_CFL_CFL','CPU_CPU_PRJ','CPU_CPU_MFD','PRT_PRT_PRJ','PRT_PRT_MFD'};
 D = [];
 
 File_Index = 1;
 
-while(File_Index<=22)
+while(File_Index<=1)
 
 disp(File_Index);
 
-load(strcat('Z_',char(File_Names(File_Index)),'_Selftest_T5.mat'));
+load(strcat('Z_',char(File_Names(File_Index)),'_Selftest_T1.mat'));
 
 % % Coefficients Belonging to AUT
 
@@ -86,21 +87,29 @@ Z7_Stats = [median(Z7_norm); mean(Z7_norm); std(Z7_norm); max(Z7_norm); min(Z7_n
 
 Z_Stats = [Z1_Stats;Z2_Stats;Z3_Stats;Z4_Stats;Z5_Stats;Z6_Stats;Z7_Stats];
 
-% % Selftest Threshold
-Th_CFL = 0.000773121;
-Th_LCD_CPU = 0.004604558;
-Th_LC = 1.79E-04; %PERT15
-Th_PRJ = 0.00429386;
-Th_PRT = 0.00E+00; %PERT10
-Th_MFD = 0.001345596;
-Th_BGN = 0.000795484; %
+% % Threshold
+% Th_CFL = 0.000909862;
+% Th_LCD_CPU = 0.004405531;
+% Th_LC = 6.87E-05; % 
+% Th_PRJ = 0.00363837;
+% Th_PRT = 4.51E-05; % 
+% Th_MFD = 0.000823391;
+% Th_BGN = 0.001241607; %
 
-% % % Crosstest Threshold
+Th_CFL = 0.001111644; %PERT-10
+Th_LCD_CPU = 0.004405531;
+Th_LC = 0.000268829; % %PERT-10
+Th_PRJ = 0.00363837;
+Th_PRT = 0.003424318; % %PERT-10
+Th_MFD = 0.000823391;
+Th_BGN = 0.001241607; %
+
+% % % Threshold
 % Th_CFL = ;
 % Th_LCD_CPU = ;
-% Th_LC = ; %PERT15
+% Th_LC = ; % 
 % Th_PRJ = ;
-% Th_PRT = ; %PERT10
+% Th_PRT = ; % 
 % Th_MFD = ;
 % Th_BGN = ; %
 
@@ -108,33 +117,54 @@ Th_BGN = 0.000795484; %
 C1=0;C2=0;C3=0;C4=0;C5=0;C6=0;C7=0;
 for index=1:Num_test_samples
     if(Z1_norm(index)>=Th_CFL)
-        C1=C1+1;
+        C1(index)=1;
+    elseif(Z1_norm(index)<Th_CFL)
+        C1(index)=0;
     end
+    
     if(Z2_norm(index)>=Th_LCD_CPU)
-        C2=C2+1;
+        C2(index)=1;
+    elseif(Z2_norm(index)<Th_LCD_CPU)
+        C2(index)=0;
     end
+    
     if(Z3_norm(index)>=Th_LC)
-        C3=C3+1;
+        C3(index)=1;
+    elseif(Z3_norm(index)<Th_LC)
+        C3(index)=0;
     end
+    
     if(Z4_norm(index)>=Th_PRJ)
-        C4=C4+1;
+        C4(index)=1;
+    elseif(Z4_norm(index)<Th_PRJ)
+        C4(index)=0;
     end
+    
     if(Z5_norm(index)>=Th_PRT)
-        C5=C5+1;
+        C5(index)=1;
+    elseif(Z5_norm(index)<Th_PRT)
+        C5(index)=0;
     end
+    
     if(Z6_norm(index)>=Th_MFD)
-        C6=C6+1;
+        C6(index)=1;
+    elseif(Z6_norm(index)<Th_MFD)
+        C6(index)=0;
     end
+    
     if(Z7_norm(index)>=Th_BGN)
-        C7=C7+1;
+        C7(index)=1;
+    elseif(Z7_norm(index)<Th_BGN)
+        C7(index)=0;
     end
 end
 
 C = [C1;C2;C3;C4;C5;C6;C7];
 
-clearvars -except C D File_Index File_Names Num_classes Num_test_samples D_CFL D_LC D_PRJ D_LCD_CPU D_PRT D_MFD D_BGN Dict_atoms
+% clearvars -except C D File_Index File_Names Num_classes Num_test_samples D_CFL D_LC D_PRJ D_LCD_CPU D_PRT D_MFD D_BGN Dict_atoms
 
-D = [D , C];
+% D = [D , C];
+save(strcat('Class_labels_',char(File_Names(File_Index)),'_T1.mat'),'C','C1','C2','C3','C4','C5','C6','C7');
 
 File_Index = File_Index+1;
 

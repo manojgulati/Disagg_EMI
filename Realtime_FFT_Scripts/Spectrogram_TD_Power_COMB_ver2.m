@@ -11,14 +11,14 @@ close all;
 format long g;
 
 % Path for Averaged FFT data 
-Path1 = './LC-BGN/';
+Path1 = './PRT_PRT_MFD/';
 Path4 = '';
 Path2 = 'Data/';
 Path3 = 'Processed_EMI/';
 
 % Path for Smart meter data 
 Path5 = strcat(Path1,'Smart_Meter_Data/');
-Path6 = '01-June-2017.csv';
+Path6 = '06-August-2017.csv';
 % Path6 = '30-May-2017.csv';
 
 % Load averaged and preprocessed FFT data
@@ -39,14 +39,14 @@ del_f = 1/T; % Min. Freq. resolution (in Hz)
 f = (fs/2-1/T)*linspace(0,1,L/2);
 f1 = f/1000000;
 
-%% Print start and end timestamp of FFT data
+% % Print start and end timestamp of FFT data
 clc;
 display('Start TS:');
 display(TS_Vector_Required(1));
 display('End TS:');
 display(TS_Vector_Required(end));
 
-%%
+% %
 % Timestamp for time domain and frequency domain plot
 start_time = TS_Vector_Required(1);
 end_time = TS_Vector_Required(end);
@@ -59,7 +59,7 @@ x_end = find(x2 == end_time);
 
 EMI_duration = size(M1_Updated,2);
 
-%% Plot spectrogram using stacked FFT data retrived from averaged FFT frames
+% % Plot spectrogram using stacked FFT data retrived from averaged FFT frames
 % figure;
 % figure('units','normalized','outerposition',[0 0 1 1]);
 t_axis = [1:EMI_duration];
@@ -81,7 +81,7 @@ grid on;
 
 ah3 = subplot(3,1,3);
 x_lim = t_axis;
-imagesc(x_lim,f1(1:1500),M1_Updated(1:1500,:));
+imagesc(x_lim,f1(1:1000),M1_Updated(1:1000,:));
 % set(gca, 'YTickLabel',[f1(1:5244)]);
 xlabel('Time (in seconds)','FontSize',12);
 ylabel('Frequency (in MHz)','FontSize',12);
