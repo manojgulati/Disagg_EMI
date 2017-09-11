@@ -2,7 +2,7 @@ clc;
 clear all;
 close all;
 
-File_Names = {'CFL','CPU','LC','PRJ','PRT','MFD','BGN','CFL_CPU','CFL_LC','CFL_PRJ','CFL_PRT','CFL_MFD','CPU_LC','CPU_PRJ','CPU_PRT','CPU_MFD','LC_PRJ','LC_PRT','LC_MFD','PRJ_PRT','PRJ_MFD','PRT_MFD'};
+File_Names = {'CFL','CPU','LC','PRJ','PRT','MFD','BGN'};
 
 for i = 1:1
    

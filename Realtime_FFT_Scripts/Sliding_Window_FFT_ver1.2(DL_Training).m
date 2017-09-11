@@ -11,26 +11,25 @@ close all;
 
 File_Names = {'CFL','CPU','LC','PRJ','PRT','MFD','BGN','CFL_CPU','CFL_LC','CFL_PRJ','CFL_PRT','CFL_MFD','CPU_LC','CPU_PRJ','CPU_PRT','CPU_MFD','LC_PRJ','LC_PRT','LC_MFD','PRJ_PRT','PRJ_MFD','PRT_MFD'};
 
-file_ind = 7;
+file_ind = 8;
 
-while(file_ind<=7)
+while(file_ind<=22)
 
-% Path1 = './CFL-BGN/';
+Path1 = './CFL_CPU/';
 Path2 = 'Plots/';
 Path3 = 'Data/';
 Path4 = 'FFT_Dump/';
 
-loadContent=dir(strcat('./',char(File_Names(file_ind)),'_Study_Continuous_[Monday]/','*.csv'));
+loadContent=dir(strcat('./',char(File_Names(file_ind)),'/','*.csv'));
 No_of_files_actual = size(loadContent,1);
 No_of_files = 3010;
 No_of_traces = 1;
 % %
-
 offset = 0;
 while(offset<=No_of_files)
 
 for i=1:No_of_traces
-    M1(:,:,i) = dlmread(strcat('./',char(File_Names(file_ind)),'_Study_Continuous_[Monday]/',loadContent(i+offset,1).name),'');
+    M1(:,:,i) = dlmread(strcat('./',char(File_Names(file_ind)),'/',loadContent(i+offset,1).name),'');
 end
 
 for i=1:No_of_traces
@@ -131,7 +130,7 @@ CM_Data = ampY_1;
 Timestamp = round(str2num(loadContent(i-No_of_traces+offset+1,1).name(1:end-4)));
 
 % Store averaged FFT data as mat files
-save(strcat('./',char(File_Names(file_ind)),'_Study_Continuous_[Monday]/',Path4,loadContent(i-No_of_traces+offset+1,1).name,'.mat'),'CM_Data','Timestamp');  % function form
+save(strcat('./',char(File_Names(file_ind)),'/',Path4,loadContent(i-No_of_traces+offset+1,1).name,'.mat'),'CM_Data','Timestamp');  % function form
 % clear variables
 clear CM_Data;
 clear DM_Data;
@@ -145,3 +144,4 @@ end
 file_ind = file_ind+1;
 
 end
+
